@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pokedex</title>
+
+        <!-- For this page, your styles will be in /static/css/index.css -->
+        <!-- Do NOT use a CSS library or framework like Bootstrap - practice writing CSS first -->
+        <link type="text/css" rel="stylesheet" href="/static/css/pokemon/detail.css" />
+
+        <!-- jQuery is already downloaded and installed for you -->
+        <!-- In order to use jQuery in your JavaScript, this file needs to be added BEFORE your custom JavaScript -->
+        <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    </head>
+    <body>
+        <!-- Your HTML should be here -->
+        <div class="container">
+            <p class="navigation"><a href="/">Back to home page</a></p>
+            <h1 class="pokemon-name"></h1>
+            <img class="pokemon-image" />
+            <section>
+                <h2>Types</h2>
+                <ul class="pokemon-types">
+                </ul>
+            </section>
+            <section>
+                <h2>Description</h2>
+                <p class="pokemon-description"></p>
+            </section>
+            <section>
+                <h2>Evolutions</h2>
+                <table class="pokemon-evolutions">
+                    <tr><th>Pokemon</th><th>Level</th><th>Method</th></tr>
+                </table>
+            </section>
+        </div>
+        <!-- Your HTML should end here -->
+        <!-- Something is missing here in order for your JavaScript to work. What do you need to add? -->
+        <script type="text/javascript" src="/static/js/pokemon/detail.js"></script>
+    </body>
+</html>

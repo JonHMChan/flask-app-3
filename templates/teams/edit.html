@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Team</title>
+
+        <!-- For this page, your styles will be in /static/css/index.css -->
+        <!-- Do NOT use a CSS library or framework like Bootstrap - practice writing CSS first -->
+        <link type="text/css" rel="stylesheet" href="/static/css/teams/edit.css" />
+
+        <!-- jQuery is already downloaded and installed for you -->
+        <!-- In order to use jQuery in your JavaScript, this file needs to be added BEFORE your custom JavaScript -->
+        <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    </head>
+    <body>
+        <!-- Your HTML should be here -->
+        <div class="container">
+            <p class="navigation"><a class="back">Back to team page</a></p>
+
+            <form class="form">
+                <fieldset>
+                    <p><label for="name">Team Name</label></p>
+                    <p><input type="text" id="name" name="name" /></p>
+                </fieldset>
+                <fieldset>
+                    <p><label for="description">Description</label></p>
+                    <p><textarea id="description" name="description"></textarea></p>
+                </fieldset>
+                <section>
+                    <table class="team-pokemon">
+                        <tr><th colspan="2">Pokemon</th><th>Level</th><th>Type</th><th>Remove</th></tr>
+                    </table>
+                </section>
+                <p>
+                    <input type="submit" name="submit" id="submit" value="Submit" />
+                </p>
+            </form>
+            
+        </div>
+        <!-- Your HTML should end here -->
+        <script type="text/javascript" src="/static/js/teams/edit.js"></script>
+    </body>
+</html>
