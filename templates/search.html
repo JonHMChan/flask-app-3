@@ -15,6 +15,7 @@
         <!-- Your HTML should start here -->
         
         <div class="container">
+            <p class="back"><a href="/">Back to home page</a></p>
             <h1>Search</h1>
             <form class="search-container" action="/search">
                 <input type="text" name="query" id="query" placeholder="Search" value="{{ query }}" />
@@ -23,7 +24,7 @@
             <div class="content">
                 {% for result in results %}
                     <div class="result">
-                        <p class="title"><a href="/{{ result.type }}/{{ result.id }}">{{ result.name }}</a></p>
+                        <p class="title"><a href="{{ result.url }}">{{ result.name }}</a></p>
                         <p class="subtitle">{{ result.type }}</p>
                         <p class="description">{{ result.description }}</p>
                     </div>

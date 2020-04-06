@@ -56,6 +56,7 @@ def search():
             "type": "pokemon",
             "name": item.get("name", ""),
             "description": item.get("description", ""),
+            "url": "/pokemon/" + str(item.get("id", -1)),
             "ranking": 0
         }
         for token in tokens:
@@ -77,6 +78,7 @@ def search():
             "type": "team",
             "name": item.get("name", ""),
             "description": item.get("description", ""),
+            "url": "/teams/" + str(item.get("id", -1)),
             "ranking": 0
         }
         for token in tokens:
