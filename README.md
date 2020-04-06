@@ -1,7 +1,7 @@
 # Flask App 3: Server Side
-For this exercise, you'll be creating a Pokedex that displays all of the original 151 Pokemon and detail pages for each Pokemon. The application is also live at https://sleepy-earth-06238.herokuapp.com/ if you would like to see how it works.
+For this exercise, you'll be creating a Pokedex that displays all of the original 151 Pokemon and detail pages for each Pokemon. The application is also live at https://intense-dusk-62733.herokuapp.com/ if you would like to see how it works.
 
-![Pokedex Homepage](https://raw.githubusercontent.com/JonHMChan/flask-app-1/master/static/img/preview.png)
+![Pokedex Homepage](https://raw.githubusercontent.com/JonHMChan/flask-app-3/master/static/img/preview.png)
 
 ## What you'll practice
  - Flask
@@ -57,4 +57,6 @@ You'll be focusing on the front end of the application. Future exercises will be
  - The teams API allows for all basic REST: get all teams, get one team, create a team, delete a team, update an entire team, update a team partially
 2. **Search** (`localhost:5000/search`) - You will need to write the back end for this route (`app.py`) and use Jinja to render the results (`/templates/search.html`):
  - In the back end, requirements are laid out in comments. There are additional requirements if you finish early.
+ - Your search page should show the number of results, the original query, and a ranked list of all the results.
+ - Each search result should have a working link to its detail page, specify what type of item it is (pokemon or team), and a description.
  - When rendering the results, do NOT use JavaScript or AJAX.
