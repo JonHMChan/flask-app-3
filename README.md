@@ -1,5 +1,5 @@
 # Flask App 3: Server Side
-For this exercise, you'll be creating a Pokedex that displays all of the original 151 Pokemon and detail pages for each Pokemon. The application is also live at https://intense-dusk-62733.herokuapp.com/ if you would like to see how it works.
+For this exercise, you'll be writing the back end code to support a fully built front end. You will also practice creating a global search feature that allows the user to search for pokemon and teams. The application is also live at https://intense-dusk-62733.herokuapp.com/ if you would like to see how it works.
 
 ![Pokedex Homepage](https://raw.githubusercontent.com/JonHMChan/flask-app-3/master/static/img/preview.png)
 
@@ -59,4 +59,5 @@ You'll be focusing on the front end of the application. Future exercises will be
  - In the back end, requirements are laid out in comments. There are additional requirements if you finish early.
  - Your search page should show the number of results, the original query, and a ranked list of all the results.
  - Each search result should have a working link to its detail page, specify what type of item it is (pokemon or team), and a description.
+ - Both the home page at `localhost:5000` and the search page should have a search bar that takes the user search results page that fires on submission.
  - When rendering the results, do NOT use JavaScript or AJAX.
