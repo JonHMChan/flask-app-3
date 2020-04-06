@@ -1,11 +1,16 @@
 # Do not change anything in this file for this exercise
 import os
-import api
+import api 
+import json
 from flask import Flask, render_template
 
 app = Flask(__name__)
 app.register_blueprint(api.pokemon, url_prefix="/api")
 app.register_blueprint(api.teams, url_prefix="/api")
+
+# Take all data from database.json and turn it into a Python dictionary to store in DATABASE
+with open('data/database.json') as f:
+  DATABASE = json.load(f)
 
 # Home page route that serves index.html
 @app.route('/')
@@ -29,6 +34,10 @@ def teams_id(id):
 @app.route('/teams/<int:id>/edit')
 def teams_id_edit(id):
     return render_template('teams/edit.html')
+
+@app.route('/teams/create')
+def teams_create():
+    return render_template('teams/create.html', pokemon=DATABASE.get("pokemon", []))
 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.

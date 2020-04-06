@@ -15,6 +15,15 @@ current_id = len(DATABASE) + 1
 # API route that returns all pokemon from DATABASE
 @pokemon.route('/pokemon', methods=['GET'])
 def api_pokemon_get():
+
+    search = request.args.get('search', '').lower()
+    if len(search) > 0:
+        results = []
+        for pokemon in DATABASE:
+            if pokemon.get("name", "").lower().startswith(search):
+                results.append(pokemon)
+        return jsonify(results), 200
+
     return jsonify(DATABASE), 200
 
 # API route that returns a single pokemon from DATABASE according to the ID in the URL

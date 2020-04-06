@@ -10,7 +10,7 @@ with open('data/database.json') as f:
 DATABASE = raw.get("teams", [])
 
 # Track the ID that will be used for new teams when they are added to DATABASE
-current_id = len(DATABASE) + 1
+current_id = len(DATABASE)
 
 # REST
 # One of the ways to design your web application is to create an internal API so your front end can get data.
@@ -54,7 +54,7 @@ def api_teams_id_post():
     json = request.get_json()
 
     # Validating the request body before inserting it into DATABASE
-    keys = ["name", "description", "pokemon"]
+    keys = ["name", "description", "members"]
     for key in keys:
         # Make sure all the required keys in the keys list is in the response json
         if key not in json:
@@ -62,26 +62,28 @@ def api_teams_id_post():
                 "error": ("You are missing the '" + key  + "' in your request body")
             }), 400
         # Make sure the values at the types and evolutions keys are lists
-        if key in ["pokemon"] and not isinstance(json[key],list):
+        if key in ["members"] and not isinstance(json[key],list):
             return jsonify({
                 "error": ("Your value at '" + key  + "' must be a list, not a '" + type(json[key]).__name__ + "'")
             }), 400
 
     # Create a dictionary that contains all of the request json information and a new ID
-    teams = {
+    team = {
         "id": current_id,
         "name": json["name"],
         "description": json["description"],
-        "pokemon": []
+        "members": json["members"]
     }
-    # Add the new teams entry to the end of the global DATABASE list
-    DATABASE.append(teams)
+    # Add the new team entry to the end of the global DATABASE list
+    DATABASE.append(team)
 
-    # Increment the current_id by 1 so it will be unique for the next inserted teams
+    # Increment the current_id by 1 so it will be unique for the next inserted team
     current_id = current_id + 1
 
-    # Return the newly inserted teams as a response
-    return jsonify(teams)
+    print(DATABASE)
+
+    # Return the newly inserted team as a response
+    return jsonify(team)
 
 # API route that does a full update by replacing the entire teams dictionary at the specified ID with the request body JSON
 # For example sending { "name": "Foobar" } to /api/teams/1 would replace the Bulbasaur dictionary with the object { "name": "Foobar" }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Team</title>
+
+        <!-- For this page, your styles will be in /static/css/index.css -->
+        <!-- Do NOT use a CSS library or framework like Bootstrap - practice writing CSS first -->
+        <link type="text/css" rel="stylesheet" href="/static/css/teams/create.css" />
+
+        <!-- jQuery is already downloaded and installed for you -->
+        <!-- In order to use jQuery in your JavaScript, this file needs to be added BEFORE your custom JavaScript -->
+        <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    </head>
+    <body>
+        <!-- Your HTML should be here -->
+        <div class="container">
+            <p class="navigation"><a class="back" href="/">Back to home page</a></p>
+            <h1>Create Team</h1>
+            <form class="js-form">
+                <fieldset>
+                    <p><label for="name">Team Name</label></p>
+                    <p><input type="text" id="name" name="name" class="js-name" /></p>
+                </fieldset>
+                <fieldset>
+                    <p><label for="description">Description</label></p>
+                    <p><textarea id="description" name="description" class="js-description" ></textarea></p>
+                </fieldset>
+                <section>
+                    <fieldset>
+                        <p><label for="Search">Search</label></p>
+                        <p><input type="text" id="search" name="search" class="js-search" /></p>
+                        <div class="search-results js-search-results"></div>
+                    </fieldset>
+                    <table class="team-pokemon">
+                        <tr><th colspan="2">Pokemon</th><th>Level</th><th>Type</th></tr>
+                    </table>
+                </section>
+                <p>
+                    <input type="submit" name="submit" id="submit" value="Submit" />
+                </p>
+            </form>
+            
+        </div>
+        <!-- Your HTML should end here -->
+        <script type="text/javascript" src="/static/js/teams/create.js"></script>
+    </body>
+</html>

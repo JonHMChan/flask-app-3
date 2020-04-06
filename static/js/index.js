@@ -28,7 +28,7 @@ $(document).ready(function() {
                     <h3>${team.name}</h3>
                 `;
                 $team.append(html);
-                $(".teams-container").append($team);
+                $(".js-teams").append($team);
             }
         }
     });
