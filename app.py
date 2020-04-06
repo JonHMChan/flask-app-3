@@ -52,6 +52,8 @@ def teams_create():
 # - Highlight the matching word in the name or description in the search results
 # - Implement a filter for search queries (e.g. searching "p type:fire" will only
 #   search for pokemon that contain the letter p that are fire type pokemon)
+# - Add pagination to your search results page so only 20 pokemon show up at a time,
+#   but you can navigate to another page
 @app.route('/search')
 def search():
     return render_template('search.html')        
