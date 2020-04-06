@@ -16,6 +16,9 @@
         
         <div class="container">
             <h1>Search</h1>
+            <form class="search-container" action="/search">
+                <input type="text" name="query" id="query" placeholder="Search" value="{{ query }}" />
+            </form>
             <p class="result-meta">Showing {{ results|length }} results for <strong>{{ query }}</strong></p>
             <div class="content">
                 {% for result in results %}

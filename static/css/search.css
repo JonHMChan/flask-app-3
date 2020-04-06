@@ -16,6 +16,16 @@ h1 {
     margin-bottom: 25px;
 }
 
+.search-container {
+    margin-bottom: 10px;
+}
+
+.search-container input[type=text] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
 .result-meta {
     margin-bottom: 15px;
 }
