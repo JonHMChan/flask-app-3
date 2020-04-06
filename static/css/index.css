@@ -20,6 +20,18 @@ h1 {
     width: 100%;
 }
 
+.search {
+    width: 100%;
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.search input[type=text] {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+}
+
 .teams-container {
     float: left;
     width: 25%;

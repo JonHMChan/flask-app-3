@@ -3,9 +3,9 @@
     <head>
         <title>Pokedex</title>
 
-        <!-- For this page, your styles will be in /static/css/index.css -->
+        <!-- For this page, your styles will be in /static/css/search.css -->
         <!-- Do NOT use a CSS library or framework like Bootstrap - practice writing CSS first -->
-        <link type="text/css" rel="stylesheet" href="/static/css/index.css" />
+        <link type="text/css" rel="stylesheet" href="/static/css/search.css" />
 
         <!-- jQuery is already downloaded and installed for you -->
         <!-- In order to use jQuery in your JavaScript, this file needs to be added BEFORE your custom JavaScript -->
@@ -15,28 +15,23 @@
         <!-- Your HTML should start here -->
         
         <div class="container">
-            <h1>Pokedex</h1>
-            <form class="search" action="/search">
-                <input type="text" name="query" id="query" placeholder="Search" />
-            </form>
+            <h1>Search</h1>
+            <p class="result-meta">Showing {{ results|length }} results for <strong>{{ query }}</strong></p>
             <div class="content">
-                <div class="teams-container">
-                    <h2>Teams</h2>
-                    <div class="js-teams teams-list">
-
+                {% for result in results %}
+                    <div class="result">
+                        <p class="title"><a href="/{{ result.type }}/{{ result.id }}">{{ result.name }}</a></p>
+                        <p class="subtitle">{{ result.type }}</p>
+                        <p class="description">{{ result.description }}</p>
                     </div>
-                    <p><a href="/teams/create" class="teams-create">Create Team</a></p>
-                </div>
-                <div class="pokemon-container">
-                    <h2>Pokemon</h2>
-                </div>
+                {% endfor %}
             </div>
             
         </div>
 
         <!-- Your HTML should end here -->
-        <!-- For this page, your JavaScript will be in /static/js/index.js -->
+        <!-- For this page, your JavaScript will be in /static/js/search.js -->
         <!-- Custom JavaScript is typically located at the BOTTOM right before the closing </body> tag -->
-        <script type="text/javascript" src="/static/js/index.js"></script>
+        <script type="text/javascript" src="/static/js/search.js"></script>
     </body>
 </html>

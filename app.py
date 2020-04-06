@@ -2,7 +2,7 @@
 import os
 import api 
 import json
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
 app.register_blueprint(api.pokemon, url_prefix="/api")
@@ -38,6 +38,59 @@ def teams_id_edit(id):
 @app.route('/teams/create')
 def teams_create():
     return render_template('teams/create.html', pokemon=DATABASE.get("pokemon", []))
+
+@app.route('/search')
+def search():
+    query = request.args.get('query', '').lower()
+
+    # Split tokens
+    tokens = query.split(" ")
+
+    # Rankings
+    results = []
+
+    for item in DATABASE.get("pokemon", []):
+        append = False
+        result = {
+            "id": item.get("id", -1),
+            "type": "pokemon",
+            "name": item.get("name", ""),
+            "description": item.get("description", ""),
+            "ranking": 0
+        }
+        for token in tokens:
+            for prop in [["name", 4], ["description", 2]]:
+                if token in item.get(prop[0], "").lower():
+                    append = True
+                    result["ranking"] = result.get("ranking", 0) + prop[1]
+            for pokeType in item.get("types", []):
+                if token in pokeType.lower():
+                    append = True
+                    result["ranking"] = result.get("ranking", 0) + 1
+        if append:
+            results.append(result)
+    
+    for item in DATABASE.get("teams", []):
+        append = False
+        result = {
+            "id": item.get("id", -1),
+            "type": "team",
+            "name": item.get("name", ""),
+            "description": item.get("description", ""),
+            "ranking": 0
+        }
+        for token in tokens:
+            for prop in [["name", 4], ["description", 2]]:
+                if token in item.get(prop[0], "").lower():
+                    append = True
+                    result["ranking"] = result.get("ranking", 0) + prop[1]
+        if append:
+            results.append(result)
+
+    results = sorted(results, key=lambda x: x.get("ranking", 0), reverse=True)
+    
+    return render_template('search.html', results=results, query=query)
+            
 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.
