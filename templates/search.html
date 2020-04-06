@@ -6,32 +6,12 @@
         <!-- For this page, your styles will be in /static/css/search.css -->
         <!-- Do NOT use a CSS library or framework like Bootstrap - practice writing CSS first -->
         <link type="text/css" rel="stylesheet" href="/static/css/search.css" />
-
-        <!-- jQuery is already downloaded and installed for you -->
-        <!-- In order to use jQuery in your JavaScript, this file needs to be added BEFORE your custom JavaScript -->
-        <script type="text/javascript" src="/static/js/jquery.min.js"></script>
     </head>
     <body>
         <!-- Your HTML should start here -->
-        
-        <div class="container">
-            <h1>Search</h1>
-            <p class="result-meta">Showing {{ results|length }} results for <strong>{{ query }}</strong></p>
-            <div class="content">
-                {% for result in results %}
-                    <div class="result">
-                        <p class="title"><a href="/{{ result.type }}/{{ result.id }}">{{ result.name }}</a></p>
-                        <p class="subtitle">{{ result.type }}</p>
-                        <p class="description">{{ result.description }}</p>
-                    </div>
-                {% endfor %}
-            </div>
-            
-        </div>
+        <!-- Look up the Jinja documentation to display items passed from the server -->
+        <!-- There should be no JavaScript used on this page -->
 
         <!-- Your HTML should end here -->
-        <!-- For this page, your JavaScript will be in /static/js/search.js -->
-        <!-- Custom JavaScript is typically located at the BOTTOM right before the closing </body> tag -->
-        <script type="text/javascript" src="/static/js/search.js"></script>
     </body>
 </html>

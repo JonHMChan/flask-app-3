@@ -35,62 +35,26 @@ def teams_id(id):
 def teams_id_edit(id):
     return render_template('teams/edit.html')
 
+# Teams create page that serves teams/create.html
 @app.route('/teams/create')
 def teams_create():
     return render_template('teams/create.html', pokemon=DATABASE.get("pokemon", []))
 
+# Searches for pokemon and teams in DATABASE and displays in search.html using Jinja (no AJAX)
+# - Searches should be case insensitive
+# - You should not use JavaScript or AJAX in search.html
+# - For pokemon, items should be ranked higher if any of the words in the search query are in the name, description, or types
+# - For teams, items should be ranked higher if any of the words in the search query are in the name or description
+# - Not all properties are treated equally: if there is a match in the name, rank the item higher than other properties
+
+# Extra requirements when you're done:
+# - Teams should rank higher if their member pokemon also match
+# - Highlight the matching word in the name or description in the search results
+# - Implement a filter for search queries (e.g. searching "p type:fire" will only
+#   search for pokemon that contain the letter p that are fire type pokemon)
 @app.route('/search')
 def search():
-    query = request.args.get('query', '').lower()
-
-    # Split tokens
-    tokens = query.split(" ")
-
-    # Rankings
-    results = []
-
-    for item in DATABASE.get("pokemon", []):
-        append = False
-        result = {
-            "id": item.get("id", -1),
-            "type": "pokemon",
-            "name": item.get("name", ""),
-            "description": item.get("description", ""),
-            "ranking": 0
-        }
-        for token in tokens:
-            for prop in [["name", 4], ["description", 2]]:
-                if token in item.get(prop[0], "").lower():
-                    append = True
-                    result["ranking"] = result.get("ranking", 0) + prop[1]
-            for pokeType in item.get("types", []):
-                if token in pokeType.lower():
-                    append = True
-                    result["ranking"] = result.get("ranking", 0) + 1
-        if append:
-            results.append(result)
-    
-    for item in DATABASE.get("teams", []):
-        append = False
-        result = {
-            "id": item.get("id", -1),
-            "type": "team",
-            "name": item.get("name", ""),
-            "description": item.get("description", ""),
-            "ranking": 0
-        }
-        for token in tokens:
-            for prop in [["name", 4], ["description", 2]]:
-                if token in item.get(prop[0], "").lower():
-                    append = True
-                    result["ranking"] = result.get("ranking", 0) + prop[1]
-        if append:
-            results.append(result)
-
-    results = sorted(results, key=lambda x: x.get("ranking", 0), reverse=True)
-    
-    return render_template('search.html', results=results, query=query)
-            
+    return render_template('search.html')        
 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.

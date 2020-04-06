@@ -13,24 +13,15 @@ DATABASE = raw.get("pokemon", [])
 current_id = len(DATABASE) + 1
 
 # API route that returns all pokemon from DATABASE
+# Allows for an option "search" query parameter that shows only pokemon that contain the search query in the name of the pokemon
+# For example, going to /pokemon?search=pika will return a list containing one item representing Pikachu
 @pokemon.route('/pokemon', methods=['GET'])
 def api_pokemon_get():
 
-    search = request.args.get('search', '').lower()
-    if len(search) > 0:
-        results = []
-        for pokemon in DATABASE:
-            if pokemon.get("name", "").lower().startswith(search):
-                results.append(pokemon)
-        return jsonify(results), 200
-
-    return jsonify(DATABASE), 200
+    return "Fix me!"
 
 # API route that returns a single pokemon from DATABASE according to the ID in the URL
 # For example /api/pokemon/1 will give you Bulbasaur
 @pokemon.route('/pokemon/<int:id>', methods=['GET'])
 def api_pokemon_id_get(id):
-    for pokemon in DATABASE:
-        if pokemon.get("id") == id:
-            return jsonify(pokemon), 200
-    return jsonify({}), 404
+    return "Fix me!"

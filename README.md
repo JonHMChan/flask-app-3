@@ -1,13 +1,11 @@
-# Flask App 1: Pokedex Front End
+# Flask App 3: Server Side
 For this exercise, you'll be creating a Pokedex that displays all of the original 151 Pokemon and detail pages for each Pokemon. The application is also live at https://sleepy-earth-06238.herokuapp.com/ if you would like to see how it works.
 
 ![Pokedex Homepage](https://raw.githubusercontent.com/JonHMChan/flask-app-1/master/static/img/preview.png)
 
 ## What you'll practice
- - HTML
- - CSS
- - JavaScript
- - jQuery
+ - Flask
+ - Jinja
  - AJAX
  - API calls
  - Command Line
@@ -51,52 +49,12 @@ These instructions are a simplified version of the Flask [installation instructi
 # Requirements
 You'll be focusing on the front end of the application. Future exercises will be built on top of the knowledge you gain from this exercise. You'll be focusing on the front end of the application. Future exercises will be built on top of the knowledge you gain from this exercise. In addition to the requirements below, you can see the full solution of this application running at https://sleepy-earth-06238.herokuapp.com/.
 
-1. **Home Page** (`localhost:5000`) - Your home page should have the following:
- - A heading at the top of the page with the text "Pokedex".
- - Below the heading, a grid showing all of the original Pokemon with the name and image of each Pokemon.
- - The page should be styled so each row in the grid should have four Pokemon.
- - If you hover over any Pokemon in the grid, the background color will change (any color).
- - If you click on any Pokemon in the grid, it will take you to a page with the URL `/:id` where `:id` is replaced by the Pokemon's ID. So if you click on Bulbasaur, you would go to `localhost:5000/1`.
- - You should get the Pokemon information using JavaScript/jQuery/AJAX and fetch the data from the internal server at `localhost:5000/api/pokemon`
- - For which files to change, make sure to read the "Files and folders" section of this README.
-2. **Detail Page** (`localhost:5000/:id`, where `:id` is the ID of the Pokemon) - For each Pokemon, there's a detail page that includes the following:
- - A link to go back to the home page.
- - A heading with the Pokemon's name.
- - An image of the Pokemon.
- - A section for the Pokemon's types. It should include:
-   - A heading with the text "Types"
-   - An unordered list underneath the heading with all the types of the Pokemon.
- - A section for the Pokemon's description. It should include:
-   - A heading with the text "Description"
-   - The Pokemon's description as a paragraph
- - A section for the Pokemon's evolutions. It should include:
-   - A heading with the text "Evolutions"
-   - A table that lists all the information about the Pokemon's evolutions. This should include the evolution's name, level at which the Pokemon evolves, and the method used to evolve.
-   - The name of each Pokemon's evolutions should link to their detail page. For example, Bulbasaur evolves into Ivysaur, and clicking on "Ivysaur" in the evolutions table should take me to Ivysaur's detail page at `localhost:5000/2`. Some of the links may not work if they are not part of the original 151 Pokemon in this dataset.
- - You should get the Pokemon information using JavaScript/jQuery/AJAX and fetch the data from the internal server at `localhost:5000/api/pokemon/:id`, where `:id` is the ID of the Pokemon.
- - For which files to change, make sure to read the "Files and folders" section of this README.
-3. Do not use a CSS framework or library like Bootstrap.
-
- ## What you need to know
- To properly complete this exercise, you'll need to understand a few concepts in jQuery:
-
- - How to use jQuery with the `$()` function.
- - What `$(document).ready()` in jQuery does and how to use it to run your code.
- - How to select elements on your page using `$()` using CSS selectors.
- - How to change an element's content using the `html()`, `text()`, and `append()` methods.
- - How to change an element's attributes using `attr()`.
- - What AJAX is and how to properly make requests to an API.
- - What REST is and how it's used to structure APIs.
- - How to use the `$.ajax()` method in jQuery. There are a lot of options for `$.ajax()`,
-   but you only need to pay attention to method, url, data, and success. Figure out
-   what each of these are for and how to use them.
- - To properly use `$.ajax()` and the success option, you'll need to understand JavaScript callbacks.
- - To make writing stings with variable data easier, look up template literals in JavaScript.
- 
-Here are some helpful places to look:
-
- - W3Schools has a pretty straightforward tutorial on jQuery: https://www.w3schools.com/jquery/
- - YouTube has some great tutorials as well. Here's one on jQuery and AJAX: https://www.youtube.com/watch?v=fEYx8dQr_cQ
- - The jQuery documentation is also helpful, but it can be overwhelming: https://api.jquery.com/
-
-Look around in different places and different mediums to learn.
+1. **API** (`localhost:5000/api`) - You need to fill out all the of API endpoints that return "Fix me!" in `/api/pokemon.py` and `/api/teams.py`:
+ - The front end of the application is complete: use it to guide your decisions building the APIs
+ - You should be completing these endpoints using the REST pattern
+ - The pokemon API allows you to get a single pokemon record or lists all the pokemon in the database
+ - The pokemon API has an additional requirement on getting all pokemon: it can also filter results using a search paramater
+ - The teams API allows for all basic REST: get all teams, get one team, create a team, delete a team, update an entire team, update a team partially
+2. **Search** (`localhost:5000/search`) - You will need to write the back end for this route (`app.py`) and use Jinja to render the results (`/templates/search.html`):
+ - In the back end, requirements are laid out in comments. There are additional requirements if you finish early.
+ - When rendering the results, do NOT use JavaScript or AJAX.
