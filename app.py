@@ -2,6 +2,7 @@
 import os
 import api 
 import json
+import re
 from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
@@ -41,7 +42,7 @@ def teams_create():
 
 @app.route('/search')
 def search():
-    query = request.args.get('query', '').lower()
+    query = request.args.get('query', '')
 
     # Split tokens
     tokens = query.split(" ")
@@ -49,8 +50,13 @@ def search():
     # Rankings
     results = []
 
+    # Search through pokemon
     for item in DATABASE.get("pokemon", []):
+
+        # Track whether we need to add this pokemon to the results
         append = False
+
+        # Result object with URL, ranking
         result = {
             "id": item.get("id", -1),
             "type": "pokemon",
@@ -59,18 +65,38 @@ def search():
             "url": "/pokemon/" + str(item.get("id", -1)),
             "ranking": 0
         }
+
+        # Iterate through each token and see if there 
         for token in tokens:
+            token_lower = token.lower()
+
+            # Loop through the properties we want to consider
             for prop in [["name", 4], ["description", 2]]:
-                if token in item.get(prop[0], "").lower():
+                if token_lower in item.get(prop[0], "").lower():
+                    
+                    # If token is found, mark result for adding to results and update ranking score
                     append = True
                     result["ranking"] = result.get("ranking", 0) + prop[1]
+                    
+                    # Highlight the fields with a class
+                    token_regex = re.compile(re.escape(token), re.IGNORECASE)
+                    highlights = set(token_regex.findall(result.get(prop[0])))
+                    for highlight in highlights:
+                        result[prop[0]] = str(result[prop[0]]).replace(highlight, "<span class=\"highlight\">" + highlight + "</span>")
+            
+            # Loop through the types
             for pokeType in item.get("types", []):
-                if token in pokeType.lower():
+
+                # If token is found, mark result for adding to results and update ranking score
+                if token_lower in pokeType.lower():
                     append = True
                     result["ranking"] = result.get("ranking", 0) + 1
+
+        # Add result object to results if marked
         if append:
             results.append(result)
     
+    # Similar for teams
     for item in DATABASE.get("teams", []):
         append = False
         result = {
@@ -82,15 +108,23 @@ def search():
             "ranking": 0
         }
         for token in tokens:
+            token_lower = token.lower()
             for prop in [["name", 4], ["description", 2]]:
-                if token in item.get(prop[0], "").lower():
+                if token_lower in item.get(prop[0], "").lower():
                     append = True
                     result["ranking"] = result.get("ranking", 0) + prop[1]
+
+                    token_regex = re.compile(re.escape(token), re.IGNORECASE)
+                    highlights = set(token_regex.findall(result.get(prop[0])))
+                    for highlight in highlights:
+                        result[prop[0]] = str(result[prop[0]]).replace(highlight, "<span class=\"highlight\">" + highlight + "</span>")
         if append:
             results.append(result)
 
+    # Sort results by ranking score
     results = sorted(results, key=lambda x: x.get("ranking", 0), reverse=True)
     
+    # Render the search page with the results and the original query
     return render_template('search.html', results=results, query=query)
             
 

@@ -46,3 +46,7 @@ h1 {
     font-size: 12;
     color: #666;
 }
+
+.highlight {
+    background: yellow;
+}
