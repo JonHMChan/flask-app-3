@@ -67,7 +67,13 @@ def api_teams_id_put(id):
 # For example sending { "name": "Foobar" } to /api/teams/1 would only change Bulbasaur's name to "Foobar" - nothing else would change
 @teams.route('/teams/<int:id>', methods=['PATCH'])
 def api_teams_id_patch(id):
-    return "Fix me!"
+    team_updates = json.loads(request.data)
+    for teams in DATABASE:
+        if teams['id'] == id:
+            updateLocation = DATABASE.index(teams)
+            for key in team_updates.keys():
+                DATABASE[updateLocation][key] = team_updates[key]
+            return teams, 200
 
 # API route that deletes a single teams from DATABASE
 # For example /api/teams/1 will delete Bulbasaur
