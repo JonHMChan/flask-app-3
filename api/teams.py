@@ -57,7 +57,11 @@ def api_teams_id_post():
 # For example sending { "name": "Foobar" } to /api/teams/1 would replace the Bulbasaur dictionary with the object { "name": "Foobar" }
 @teams.route('/teams/<int:id>', methods=['PUT'])
 def api_teams_id_put(id):
-    return "Fix me!"
+    edited_team = json.loads(request.data)
+    for i in range(len(DATABASE)-1):
+        if DATABASE[i]['id'] == id:
+            DATABASE[i] = edited_team
+            return edited_team, 200
 
 # API route that does a partial update by changing the values of the teams dictionary at the specified ID with the values in request body JSON
 # For example sending { "name": "Foobar" } to /api/teams/1 would only change Bulbasaur's name to "Foobar" - nothing else would change
