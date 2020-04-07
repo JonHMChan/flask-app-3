@@ -64,4 +64,7 @@ def api_teams_id_patch(id):
 # For example /api/teams/1 will delete Bulbasaur
 @teams.route('/teams/<int:id>', methods=['DELETE'])
 def api_teams_id_delete(id):
-    return "Fix me!"
+    for teams in DATABASE:
+        if teams['id'] == id:
+            DATABASE.remove(teams)
+            return jsonify(id), 200
