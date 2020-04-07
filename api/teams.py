@@ -46,7 +46,12 @@ def api_teams_id_get(id):
 # API route that creates a new team using the request body JSON and inserts it at the end of DATABASE
 @teams.route('/teams', methods=['POST'])
 def api_teams_id_post():
-    return "Fix me!"
+    global current_id
+    new_team = json.loads(request.data)
+    new_team['id'] = current_id
+    DATABASE.append(new_team)
+    current_id += 1
+    return new_team, 200
 
 # API route that does a full update by replacing the entire teams dictionary at the specified ID with the request body JSON
 # For example sending { "name": "Foobar" } to /api/teams/1 would replace the Bulbasaur dictionary with the object { "name": "Foobar" }
