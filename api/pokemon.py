@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, session
 import json
 
 # A Flask blueprint that allows you to separate different parts of the app into different files
@@ -17,6 +17,14 @@ current_id = len(DATABASE) + 1
 # For example, going to /pokemon?search=pika will return a list containing one item representing Pikachu
 @pokemon.route('/pokemon', methods=['GET'])
 def api_pokemon_get():
+  search_string = request.args.get('search')
+  search_results = []
+  if search_string:
+    for pokemon in DATABASE:
+      if search_string.lower() in pokemon['name'].lower():
+        search_results.append(pokemon)
+    return jsonify(search_results), 200
+  else:
     return jsonify(DATABASE), 200
 
 # API route that returns a single pokemon from DATABASE according to the ID in the URL
