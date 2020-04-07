@@ -33,7 +33,7 @@ current_id = len(DATABASE)
 # API route that returns all teams from DATABASE
 @teams.route('/teams', methods=['GET'])
 def api_teams_get():
-    return "Fix me!"
+    return jsonify(DATABASE), 200
 
 # API route that returns a single teams from DATABASE according to the ID in the URL
 # For example /api/teams/1 will give you Ash's Team

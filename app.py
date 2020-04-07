@@ -1,4 +1,3 @@
-# Do not change anything in this file for this exercise
 import os
 import api 
 import json
