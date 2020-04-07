@@ -39,7 +39,9 @@ def api_teams_get():
 # For example /api/teams/1 will give you Ash's Team
 @teams.route('/teams/<int:id>', methods=['GET'])
 def api_teams_id_get(id):
-    return "Fix me!"
+    for teams in DATABASE:
+        if teams['id'] == id:
+            return jsonify(teams), 200
 
 # API route that creates a new team using the request body JSON and inserts it at the end of DATABASE
 @teams.route('/teams', methods=['POST'])
