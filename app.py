@@ -55,7 +55,14 @@ def teams_create():
 #   but you can navigate to another page
 @app.route('/search')
 def search():
-    return render_template('search.html')        
+    search_string = request.args.get('query')
+    results = []
+    teams = DATABASE['teams']
+    pokemon = DATABASE['pokemon']
+    for i in range(len(teams)-1):
+        if search_string.lower() in teams[i]['name'].lower():
+            results.append(teams[i])  
+    return render_template('search.html', results=results, searchstring=search_string)        
 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.

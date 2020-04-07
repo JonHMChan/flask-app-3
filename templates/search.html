@@ -11,7 +11,21 @@
         <!-- Your HTML should start here -->
         <!-- Look up the Jinja documentation to display items passed from the server -->
         <!-- There should be no JavaScript used on this page -->
-
+        <div class="container">
+            <h1>Search</h1>
+            <form class="search" action="/search">
+                <input type="text" name="query" id="query" placeholder="search">
+            </form>
+            <div class="result-meta">Showing {{results|length}} results for "{{searchstring}}"</div>
+            {% for i in results%}
+            <div class="result">
+                <a class="title" href="/teams/{{i['id']}}">{{i['name']}}</a>
+                <div class="subtitle">stuff here tbd</div>
+                <div>{{i['description']}}</div>
+            </div>
+            {% endfor %}
+            
+        </div>
         <!-- Your HTML should end here -->
     </body>
 </html>

@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, session
+from flask import Blueprint, jsonify, request
 import json
 
 # A Flask blueprint that allows you to separate different parts of the app into different files
