@@ -55,13 +55,45 @@ def teams_create():
 #   but you can navigate to another page
 @app.route('/search')
 def search():
-    search_string = request.args.get('query')
+    search_string = request.args.get('query').lower()
     results = []
     teams = DATABASE['teams']
     pokemon = DATABASE['pokemon']
+    gens = []
+    gens_to_remove = []
+
+    def search_db(search_string, search_object):
+        if search_string in search_object['name'].lower():
+            return search_object
+        else:
+            yield
+        if search_string in search_object['description'].lower():
+            return search_object
+        else:
+            return False
+
+    for i in range(len(pokemon)-1):
+        gens.append(search_db(search_string, pokemon[i]))
     for i in range(len(teams)-1):
-        if search_string.lower() in teams[i]['name'].lower():
-            results.append(teams[i])  
+        gens.append(search_db(search_string, teams[i]))
+    
+    for j in range(len(gens)-1):
+        try:
+            next(gens[j])
+        except StopIteration as output:
+            results.append(output.value)
+            gens_to_remove.append(gens[j])
+    
+    for k in gens_to_remove:
+        gens.remove(k)
+                  
+    for j in range(len(gens)-1):
+        try:
+            next(gens[j])
+        except StopIteration as output:
+            if output.value != False:
+                results.append(output.value)
+    
     return render_template('search.html', results=results, searchstring=search_string)        
 
 if __name__ == '__main__':

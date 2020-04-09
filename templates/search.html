@@ -19,8 +19,13 @@
             <div class="result-meta">Showing {{results|length}} results for "{{searchstring}}"</div>
             {% for i in results%}
             <div class="result">
+                {% if 'types' in i %}
+                <a class="title" href="/pokemon/{{i['id']}}">{{i['name']}}</a>
+                <div class="subtitle">Pokemon</div>
+                {% else %}
                 <a class="title" href="/teams/{{i['id']}}">{{i['name']}}</a>
-                <div class="subtitle">stuff here tbd</div>
+                <div class="subtitle">Team</div>
+                {% endif %}
                 <div>{{i['description']}}</div>
             </div>
             {% endfor %}
