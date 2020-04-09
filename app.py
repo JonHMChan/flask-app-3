@@ -54,6 +54,8 @@ def teams_create():
 #   search for pokemon that contain the letter p that are fire type pokemon)
 # - Add pagination to your search results page so only 20 pokemon show up at a time,
 #   but you can navigate to another page
+
+# takes a string like "p type:electric" and splits it into p, type, and electric
 def search_parser(search_string):
         filters = re.match(r'^(?P<str>.*)\s(?P<mod>.*)[:](?P<fil>.*)(\s|$)', search_string)
         if filters != None:
@@ -61,6 +63,7 @@ def search_parser(search_string):
         else:
             return False
 
+# generator function that returns at the first match or yields until it's called again
 def search_db(search_string, search_object):
     if search_string in search_object['name'].lower():
         return search_object
@@ -83,19 +86,22 @@ def search_db(search_string, search_object):
 
 @app.route('/search')
 def search():
-    search_string = request.args.get('query').lower()
-    search_params = search_parser(search_string)
+    search_string_raw = request.args.get('query').lower()
+    search_params = search_parser(search_string_raw)
     if search_params:
         search_string = search_params.group('str')
+        search_type = search_params.group('fil')
+    else:
+        search_string = search_string_raw
+
+    print(search_type)
     results = []
     global teams
-    teams = DATABASE['teams']
     global pokemon
+    teams = DATABASE['teams']
     pokemon = DATABASE['pokemon']
     gens = []
     gens_to_remove = []
-
-    
 
     for i in range(len(pokemon)-1):
         gens.append(search_db(search_string, pokemon[i]))
@@ -109,8 +115,17 @@ def search():
             except StopIteration as output:
                 if output.value != False and output.value != None:
                     results.append(output.value)
-        
-    
+    if search_params:
+        new_results = []
+        for i in range(len(results)-1):
+            if 'types' in results[i].keys():
+                print("found types")
+                for j in results[i]['types']:
+                    if j == search_type.lower():
+                        print("found" + j)
+                        new_results.append(results[i])
+        results.clear()
+        results = new_results
     return render_template('search.html', results=results, searchstring=search_string)        
 
 if __name__ == '__main__':
