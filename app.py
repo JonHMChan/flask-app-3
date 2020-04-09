@@ -1,6 +1,7 @@
 import os
 import api 
 import json
+import re
 from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
@@ -40,47 +41,61 @@ def teams_create():
     return render_template('teams/create.html', pokemon=DATABASE.get("pokemon", []))
 
 # Searches for pokemon and teams in DATABASE and displays in search.html using Jinja (no AJAX)
-# - Searches should be case insensitive
-# - You should not use JavaScript or AJAX in search.html
-# - For pokemon, items should be ranked higher if any of the words in the search query are in the name, description, or types
-# - For teams, items should be ranked higher if any of the words in the search query are in the name or description
-# - Not all properties are treated equally: if there is a match in the name, rank the item higher than other properties
+# (done) Searches should be case insensitive
+# (done) You should not use JavaScript or AJAX in search.html
+# (done) For pokemon, items should be ranked higher if any of the words in the search query are in the name, description, or types
+# (done) For teams, items should be ranked higher if any of the words in the search query are in the name or description
+# (done) Not all properties are treated equally: if there is a match in the name, rank the item higher than other properties
 
 # Extra requirements when you're done:
-# - Teams should rank higher if their member pokemon also match
+# (done) Teams should rank higher if their member pokemon also match
 # - Highlight the matching word in the name or description in the search results
 # - Implement a filter for search queries (e.g. searching "p type:fire" will only
 #   search for pokemon that contain the letter p that are fire type pokemon)
 # - Add pagination to your search results page so only 20 pokemon show up at a time,
 #   but you can navigate to another page
+def search_parser(search_string):
+        filters = re.match(r'^(?P<str>.*)\s(?P<mod>.*)[:](?P<fil>.*)(\s|$)', search_string)
+        if filters != None:
+            return filters
+        else:
+            return False
+
+def search_db(search_string, search_object):
+    if search_string in search_object['name'].lower():
+        return search_object
+    else:
+        yield
+    if search_string in search_object['description'].lower():
+        return search_object
+    else:
+        yield
+    if 'types' in search_object.keys():
+        for t in search_object['types']:
+            if search_string == t.lower():
+                return search_object
+        return False
+    else:
+        for p in search_object['members']:
+            if search_string == pokemon[p['pokemon_id']-1]['name'].lower():
+                return search_object
+        return False
+
 @app.route('/search')
 def search():
     search_string = request.args.get('query').lower()
+    search_params = search_parser(search_string)
+    if search_params:
+        search_string = search_params.group('str')
     results = []
+    global teams
     teams = DATABASE['teams']
+    global pokemon
     pokemon = DATABASE['pokemon']
     gens = []
     gens_to_remove = []
 
-    def search_db(search_string, search_object):
-        if search_string in search_object['name'].lower():
-            return search_object
-        else:
-            yield
-        if search_string in search_object['description'].lower():
-            return search_object
-        else:
-            yield
-        if 'types' in search_object.keys():
-            for t in search_object['types']:
-                if search_string == t.lower():
-                    return search_object
-            return False
-        else:
-            for p in search_object['members']:
-                if search_string == pokemon[p['pokemon_id']-1]['name'].lower():
-                    return search_object
-            return False
+    
 
     for i in range(len(pokemon)-1):
         gens.append(search_db(search_string, pokemon[i]))
