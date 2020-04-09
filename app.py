@@ -70,6 +70,16 @@ def search():
         if search_string in search_object['description'].lower():
             return search_object
         else:
+            yield
+        if 'types' in search_object.keys():
+            for t in search_object['types']:
+                if search_string == t.lower():
+                    return search_object
+            return False
+        else:
+            for p in search_object['members']:
+                if search_string == pokemon[p['pokemon_id']-1]['name'].lower():
+                    return search_object
             return False
 
     for i in range(len(pokemon)-1):
@@ -77,22 +87,14 @@ def search():
     for i in range(len(teams)-1):
         gens.append(search_db(search_string, teams[i]))
     
-    for j in range(len(gens)-1):
-        try:
-            next(gens[j])
-        except StopIteration as output:
-            results.append(output.value)
-            gens_to_remove.append(gens[j])
-    
-    for k in gens_to_remove:
-        gens.remove(k)
-                  
-    for j in range(len(gens)-1):
-        try:
-            next(gens[j])
-        except StopIteration as output:
-            if output.value != False:
-                results.append(output.value)
+    for h in range(3):
+        for j in range(len(gens)-1):
+            try:
+                next(gens[j])
+            except StopIteration as output:
+                if output.value != False and output.value != None:
+                    results.append(output.value)
+        
     
     return render_template('search.html', results=results, searchstring=search_string)        
 
