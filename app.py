@@ -49,7 +49,7 @@ def teams_create():
 
 # Extra requirements when you're done:
 # (done) Teams should rank higher if their member pokemon also match
-# - Highlight the matching word in the name or description in the search results
+# (done) Highlight the matching word in the name or description in the search results
 # (part done) Implement a filter for search queries (e.g. searching "p type:fire" will only
 #   search for pokemon that contain the letter p that are fire type pokemon)
 # - Add pagination to your search results page so only 20 pokemon show up at a time,
@@ -85,7 +85,7 @@ def search_db(search_string, search_object):
         return False
 
 def highlighter(results, search_string, keyArray):
-    for i in range(len(results)-1):
+    for i in range(len(results)):
         for j in keyArray:
             caps_string = search_string.capitalize()
             results[i][j] = results[i][j].replace(search_string,f'<span class="highlight">{search_string}</span>')
@@ -110,13 +110,13 @@ def search():
     gens = []
     gens_to_remove = []
 
-    for i in range(len(pokemon)-1):
+    for i in range(len(pokemon)):
         gens.append(search_db(search_string, pokemon[i]))
-    for i in range(len(teams)-1):
+    for i in range(len(teams)):
         gens.append(search_db(search_string, teams[i]))
     
     for h in range(3):
-        for j in range(len(gens)-1):
+        for j in range(len(gens)):
             try:
                 next(gens[j])
             except StopIteration as output:
@@ -124,7 +124,7 @@ def search():
                     results.append(output.value)
     if search_params:
         new_results = []
-        for i in range(len(results)-1):
+        for i in range(len(results)):
             if 'types' in results[i].keys():
                 for j in results[i]['types']:
                     if j == search_type.lower():
