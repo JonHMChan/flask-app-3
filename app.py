@@ -50,7 +50,7 @@ def teams_create():
 # Extra requirements when you're done:
 # (done) Teams should rank higher if their member pokemon also match
 # - Highlight the matching word in the name or description in the search results
-# - Implement a filter for search queries (e.g. searching "p type:fire" will only
+# (part done) Implement a filter for search queries (e.g. searching "p type:fire" will only
 #   search for pokemon that contain the letter p that are fire type pokemon)
 # - Add pagination to your search results page so only 20 pokemon show up at a time,
 #   but you can navigate to another page
@@ -84,6 +84,15 @@ def search_db(search_string, search_object):
                 return search_object
         return False
 
+def highlighter(results, search_string, keyArray):
+    for i in range(len(results)-1):
+        for j in keyArray:
+            caps_string = search_string.capitalize()
+            results[i][j] = results[i][j].replace(search_string,f'<span class="highlight">{search_string}</span>')
+            results[i][j] = results[i][j].replace(caps_string,f'<span class="highlight">{caps_string}</span>')
+    return results
+
+
 @app.route('/search')
 def search():
     search_string_raw = request.args.get('query').lower()
@@ -93,8 +102,6 @@ def search():
         search_type = search_params.group('fil')
     else:
         search_string = search_string_raw
-
-    print(search_type)
     results = []
     global teams
     global pokemon
@@ -119,13 +126,14 @@ def search():
         new_results = []
         for i in range(len(results)-1):
             if 'types' in results[i].keys():
-                print("found types")
                 for j in results[i]['types']:
                     if j == search_type.lower():
-                        print("found" + j)
                         new_results.append(results[i])
         results.clear()
         results = new_results
+
+    results = highlighter(results, search_string, ['name','description'])
+    
     return render_template('search.html', results=results, searchstring=search_string)        
 
 if __name__ == '__main__':

@@ -20,13 +20,13 @@
             {% for i in results%}
             <div class="result">
                 {% if 'types' in i %}
-                <a class="title" href="/pokemon/{{i['id']}}">{{i['name']}}</a>
+                <a class="title" href="/pokemon/{{i['id']}}">{{i['name']|safe}}</a>
                 <div class="subtitle">Pokemon</div>
                 {% else %}
-                <a class="title" href="/teams/{{i['id']}}">{{i['name']}}</a>
+                <a class="title" href="/teams/{{i['id']}}">{{i['name']|safe}}</a>
                 <div class="subtitle">Team</div>
                 {% endif %}
-                <div>{{i['description']}}</div>
+                <div>{{i['description']|safe}}</div>
             </div>
             {% endfor %}
             
